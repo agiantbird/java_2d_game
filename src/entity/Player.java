@@ -91,6 +91,9 @@ public class Player extends Entity {
             // CHECK EVENT
             gp.eHandler.checkEvent();
 
+            // RESET ENTER PRESS AFTER ALL INTERACTION CHECKS
+            gp.keyH.enterPressed = false;
+
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
             if(collisionOn == false) {
                 switch(direction) {
@@ -135,7 +138,6 @@ public class Player extends Entity {
                 gp.npc[i].speak();
             }
         }
-        gp.keyH.enterPressed = false;
     }
 
     public void draw(Graphics2D g2) {
