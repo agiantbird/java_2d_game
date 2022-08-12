@@ -20,8 +20,12 @@ public class EventHandler {
     }
 
     public void checkEvent() {
-        if(hit(27, 15, "right")) { damagePit(gp.dialogueState); }
+        // damage event example
+//        if(hit(27, 15, "right")) { damagePit(gp.dialogueState); }
+        // healing event example
         if(hit(23, 12, "up")) { healingPool(gp.dialogueState); }
+        // teleport event example
+        if(hit(27, 15, "right")) { teleport(gp.dialogueState); }
     }
 
     public boolean hit(int eventCol, int eventRow, String reqDirection) {
@@ -44,6 +48,13 @@ public class EventHandler {
         eventRect.y = eventRectDefaultY;
 
         return hit;
+    }
+
+    public void teleport(int gameState) {
+        gp.gameState = gameState;
+        gp.ui.currentDialogue = "Teleport!";
+        gp.player.worldX = gp.tileSize * 37;
+        gp.player.worldY = gp.tileSize * 10;
     }
 
     public void damagePit(int gameState) {
