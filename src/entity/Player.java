@@ -35,6 +35,9 @@ public class Player extends Entity {
         solidArea.width = 32;
         solidArea.height = 32;
 
+        attackArea.width = 36;
+        attackArea.height = 36;
+
         setDefaultValues();
         getPlayerImage();
         getPlayerAttackImage();
@@ -164,6 +167,34 @@ public class Player extends Entity {
         }
         if(spriteCounter > 5 && spriteCounter <= 25) {
             spriteNum = 2;
+
+            // SAVE CURRENT WORLD X, Y, AND SOLID AREA
+            int currentWorldX = worldX;
+            int currentWorldY = worldY;
+            int solidAreaWidth = solidArea.width;
+            int solidAreaHeight = solidArea.height;
+            // ADJUST PLAYER'S WORLDX/Y FOR THE attackArea
+            switch(direction) {
+                case "up": worldY -= attackArea.height; break;
+                case "down": worldY += attackArea.height; break;
+                case "left": worldX -= attackArea.width; break;
+                case "right": worldX += attackArea.width; break;
+            }
+
+            // attackArea becomes solidArea
+            solidArea.width = attackArea.width;
+            solidArea.height = attackArea.height;
+
+            // check monster collision with the updated world x, y, and solid area
+            int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
+            damageMonster(monsterIndex);
+
+            // after checking collision, restore original data
+            worldX = currentWorldX;
+            worldY = currentWorldY;
+            solidArea.width = solidAreaWidth;
+            solidArea.height = solidAreaHeight;
+
         }
         if(spriteCounter > 25) {
             spriteNum = 1;
@@ -199,6 +230,15 @@ public class Player extends Entity {
             }
         }
     }
+
+    public void damageMonster(int i) {
+        if(i != 999) {
+            System.out.println("Hit Monster!");
+        } else {
+            System.out.println("Missed!");
+        }
+    }
+
 
     public void draw(Graphics2D g2) {
         BufferedImage image = null;
