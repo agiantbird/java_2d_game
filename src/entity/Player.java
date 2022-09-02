@@ -233,9 +233,14 @@ public class Player extends Entity {
 
     public void damageMonster(int i) {
         if(i != 999) {
-            System.out.println("Hit Monster!");
-        } else {
-            System.out.println("Missed!");
+            if(!gp.monster[i].invincible) {
+                gp.monster[i].life -= 1;
+                gp.monster[i].invincible = true;
+
+                if(gp.monster[i].life <= 0) {
+                    gp.monster[i] = null;
+                }
+            }
         }
     }
 
@@ -291,7 +296,7 @@ public class Player extends Entity {
         }
 
         if(invincible) {
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3F));
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4F));
         }
 
         g2.drawImage(image, tempScreenX, tempScreenY, null);
